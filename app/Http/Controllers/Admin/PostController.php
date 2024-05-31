@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\Post;
 use Illuminate\Http\Request;
+
+
 
 class PostController extends Controller
 {
@@ -14,8 +17,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
         //dd($posts);
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -23,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -31,7 +34,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+        $form_data['slug'] = Post::generateSlug($form_data['title']);
+        $newPost = Post::create($form_data);
+        return redirect()->route('admin.posts.show', $newPost->slug);
     }
 
     /**
@@ -39,7 +45,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        //dd($post);
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -63,6 +70,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('message', $post->title . ' è stato eliminato');
     }
 }

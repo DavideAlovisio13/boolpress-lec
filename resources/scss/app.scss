@@ -1,4 +1,4 @@
-@use './partials/variables' as *;
+@use './partials/variables'as *;
 
 $fa-font-path: "../fonts/webfonts" !default;
 
@@ -9,6 +9,29 @@ $fa-font-path: "../fonts/webfonts" !default;
 
 @import '~bootstrap/scss/bootstrap';
 
-h1 {
-    color: $text-color;
+#admin {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+
+    #sidebar {
+        background-color: red;
+        color: white;
+    }
+
+    #wrapper {
+        background-color: green;
+        flex-grow: 1;
+
+        header {
+            min-height: 70px;
+            background-color: blue;
+
+            .img-profile {
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+    }
+
 }
